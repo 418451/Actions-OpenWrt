@@ -1,5 +1,5 @@
 FROM scratch
 
-MAINTAINER kenzok78 "https://github.com/kenzok78/Build-OpenWrt"
+MAINTAINER 418451 "https://github.com/418451/Actions-OpenWrt"
 
 ADD openwrt/bin/targets/*/*/*rootfs*.tar.gz /
