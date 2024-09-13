@@ -121,10 +121,8 @@ jobs:
         cd openwrt
         rm -rf feeds/luci/themes/luci-theme-argon
         ./scripts/feeds update -a && ./scripts/feeds install -a
-        cp -f feeds/smpackage/diy/zzz-default-settings package/default-settings/files/zzz-default-settings
         cp -f feeds/smpackage/diy/banner package/base-files/files/etc/banner
         cp -Rf feeds/smpackage/diy/files/* files
-        sed -i 's/v$date1/Nov/g' package/default-settings/files/zzz-default-settings
         sed -i 's/%D %V, %C/openwrt Nov by kenzo/g' package/base-files/files/etc/banner
         cp -f feeds/smpackage/diy/${{matrix.target}}.config .config && make defconfig
         make defconfig
@@ -164,7 +162,6 @@ jobs:
         mkdir firmware
         mv -f openwrt/bin/targets/*/*/{*combined*,*sysupgrade*} ./firmware/ 2>/dev/null || true
         cp openwrt/.config  ./firmware/${{matrix.target}}.config
-        cp openwrt/build_dir/target-*/linux-*/linux-*/.config ./firmware/${{matrix.target}}_kernel.config
         cd firmware
         echo "${{ env.VERSION }}.$(date +'%Y')" > version.txt
         md5=$((md5sum *squashfs-sysupgrade* || md5sum *squashfs-combined-efi*) | awk '{print $1}') 2>/dev/null
